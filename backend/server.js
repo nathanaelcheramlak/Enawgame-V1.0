@@ -1,18 +1,28 @@
-import dotenv from "dotenv";
-import express from "express";
-import authRoutes from "./routes/auth.routes.js";
-import connectToMongoDB from "./db/connectToMongoDB.js";
+import dotenv from 'dotenv';
+import express from 'express';
+import cookieParser from 'cookie-parser';
 
-dotenv.config();
+import messageRoutes from './routes/message.routes.js';
+import authRoutes from './routes/auth.routes.js';
+import userRoutes from './routes/user.routes.js';
+
+import connectToMongoDB from './db/connectToMongoDB.js';
+
 const app = express();
-
 const PORT = process.env.PORT || 5000;
 
-app.use("/api/auth", authRoutes);
+dotenv.config();
 
-app.get("/", (req, res) => {
-  res.send("Root Page");
-});
+app.use(express.json()); // parse incoming requests with JSON payloads(req.body or data)
+app.use(cookieParser()); // parse cookies attached to the client request
+
+app.use('/api/auth', authRoutes);
+app.use('/api/messages', messageRoutes);
+app.use('/api/users', userRoutes);
+
+// app.get("/", (req, res) => {
+//   res.send("Root Page");
+// });
 
 app.listen(PORT, () => {
   connectToMongoDB();
