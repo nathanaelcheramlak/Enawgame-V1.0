@@ -4,6 +4,7 @@ export const getUsers = async (req, res) => {
   try {
     const loggedInUserId = req.user._id;
 
+    // TODO - Only return users that already have a conversation
     const allUsers = await User.find({ _id: { $ne: loggedInUserId } }).select(
       '-password',
     );
@@ -14,3 +15,5 @@ export const getUsers = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+// TODO - Implement search by username
