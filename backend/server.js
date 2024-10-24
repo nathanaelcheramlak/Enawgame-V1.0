@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 import messageRoutes from './routes/message.routes.js';
 import authRoutes from './routes/auth.routes.js';
@@ -15,6 +16,7 @@ dotenv.config();
 
 app.use(express.json()); // parse incoming requests with JSON payloads(req.body or data)
 app.use(cookieParser()); // parse cookies attached to the client request
+app.use(cors());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/messages', messageRoutes);
